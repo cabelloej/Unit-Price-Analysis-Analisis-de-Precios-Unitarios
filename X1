@@ -1,0 +1,36 @@
+   if Wmatercod = "*??*"
+      save scre to save01
+      select 4
+      go top
+      STORE 1 TO PAGINA
+      STORE 100 TO LINE
+      store "LISTADO DEL MAESTRO DE MATERIALES" TO HEAD
+      STORE WPREOBRA TO HEAD2
+      GO TOP
+      DO WHILE .NOT. EOF()
+         STORE LINE+1 TO LINE
+         IF LINE > 20
+            store "Oprima Ù para continuar" to mes
+            do aviso with mes
+            STORE PAGINA + 1 TO PAGINA
+            @ 0,0 clear
+            @ 1,40-(len(RTRIM(QQWW))/2) say QQWW
+            @ 2,1 SAY "FECHA:"+DTOC(WFECACT)
+            @ 2,70 SAY "PAGINA:"+STR(PAGINA,3)
+            @ 3,40-(len(HEAD)/2) say HEAD
+            @ 4,40-(len(HEAD2)/2) say HEAD2
+            @ 6,1 SAY "CODIGO"
+            @ 6,20 SAY "DESCRIPCION"
+            @ 7,1 SAY replicate("-",78)
+            STORE 8 TO LINE
+         ENDIF
+         @ LINE,1    SAY MATCOD
+         @ LINE,8    SAY MATDES
+         SKIP
+      ENDDO
+      store "Oprima Ù para finalizar" to mes
+      do aviso with mes
+      restore scre from save01
+      LOOP
+   endif
+
